@@ -1,0 +1,26 @@
+:root {
+  // --background-color: #342e28;
+  --spinner-color: #e53a4e;
+}
+.loadding {
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg_loadding {
+  width: 100px;
+  overflow: visible;
+}
+svg circle {
+  stroke: var(--spinner-color);
+  transform-origin: 50px 50px;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

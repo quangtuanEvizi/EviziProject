@@ -1,0 +1,59 @@
+.login{
+  .container{
+    width: 70%;
+    margin: 20vh auto;
+    text-align: center;
+    font-weight: bold;
+    font-style: 1.2rem;
+ 
+    .logo{
+        width: 50%;
+        margin: 0 auto;
+        img{
+            width: 70%;
+        }
+        h2{
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+    }
+    .input-container{
+        width: 100%;
+        margin: 0 auto;
+        label, a{
+          display: block;
+          margin: 10px 0;
+        }
+        .email-container, .password-container {
+          width: 70%;
+          margin: 10px auto;
+          display: flex;
+          flex-direction: column;
+          input {
+            height: 3vh;
+            padding: 20px;
+            font-size: 1rem;
+          }
+          label{
+            font-size: 1rem;
+            text-align: left;
+            margin-bottom: 10px;
+          }
+        }
+      }
+      .btn-container{
+        width: 50%;
+        margin: 0 auto;
+        button{
+          font-weight: 700;
+          width: 70%;
+          margin: 10px auto;
+          height: 5vh;
+          font-size: 1rem;
+        }
+      }
+      .error{
+        color: red;
+      }
+  }
+}
