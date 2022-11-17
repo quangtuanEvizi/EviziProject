@@ -42,6 +42,7 @@ export default function EditCompany() {
 
   useEffect(() => {
     getCompanyById(parseInt(companyId));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [companyId]);
 
   // useEffect(() => {
@@ -55,6 +56,7 @@ export default function EditCompany() {
       history.push("/dashboard/companies");
       return;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createSuccess]);
 
   useEffect(() => {
@@ -101,6 +103,7 @@ const FormEdit = (props: any) => {
       shouldValidate: true,
       shouldDirty: true,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [companyDetail]);
 
   const onSubmit: SubmitHandler<IFormInput> = (values) => {

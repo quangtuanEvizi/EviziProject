@@ -49,6 +49,7 @@ export default function CreateRegion() {
       history.push("/dashboard/regions");
       return;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   useEffect(() => {
@@ -76,6 +77,7 @@ export default function CreateRegion() {
       shouldValidate: true,
       shouldDirty: true,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handelSearchInput = (companyName: any) => {

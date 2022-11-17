@@ -45,6 +45,7 @@ export default function Locations() {
   -----------------------*/
   useEffect(() => {
     getLocation({ first: 20, after: null });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

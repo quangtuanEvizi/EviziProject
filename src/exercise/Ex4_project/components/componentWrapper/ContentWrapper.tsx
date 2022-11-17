@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Inspections1 from "../../view/dashboard/impection/Inspections1";
 import Companies from "../../view/dashboard/companies/companies/Companies";
 import Regions from "../../view/dashboard/regions/regions/Regions";
 import Locations from "../../view/dashboard/locations/locations/Locations";
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Redirect, Route, Switch} from "react-router-dom";
+import {  useSelector } from "react-redux";
 import {
   HIGHEST_ROLE,
   MANAGER_ROLE,
-  STORAGE_TOKEN,
 } from "../../utils/constant";
 import CreateCompany from "../../view/dashboard/companies/create/CreateCompany";
 import EditCompany from "../../view/dashboard/companies/edit/EditCompany";

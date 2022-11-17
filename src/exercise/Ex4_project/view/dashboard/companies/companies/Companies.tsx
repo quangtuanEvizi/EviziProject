@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { AiFillCloseCircle, AiFillCheckCircle } from "react-icons/ai";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { ImSearch } from "react-icons/im";
-import { IconContext } from "react-icons";
 import useCompany from "../../../../customHook/company/companyHook";
 import {
   ButtonPagination,
@@ -18,12 +16,7 @@ import {
   ListContainer,
   ListPagination,
   TableContainer,
-  TableData,
-  TableHead,
-  TableHeader,
   TableList,
-  TableName,
-  TableRow,
 } from "exercise/Ex4_project/styleComponent/listStyle";
 import EmptyPage from "exercise/Ex4_project/components/emptyPage";
 import Loadding from "exercise/Ex4_project/components/loadding/Loadding";
@@ -44,6 +37,7 @@ export default function Companies() {
   );
   useEffect(() => {
     getCompany({ first: 20, after: null });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -122,7 +116,7 @@ EVENT HANDLE
                 <TableContainer>
                   <DivTableList>
                     <TableList>
-                      <TableHead>
+                      {/* <TableHead>
                         <TableRow>
                           <TableHeader>NAME</TableHeader>
                           <TableHeader>INDUSTRY</TableHeader>
@@ -132,7 +126,7 @@ EVENT HANDLE
                           <TableHeader>IS DEMO</TableHeader>
                           <TableHeader>IS ACTIVE</TableHeader>
                         </TableRow>
-                      </TableHead>
+                      </TableHead> */}
                       {/* <tbody>
                         {companyLocalState?.map((row: any) => (
                           <TableRow>

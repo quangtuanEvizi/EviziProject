@@ -1,6 +1,6 @@
 import { DashBoard } from "exercise/Ex4_project/styleComponent/dashBoard";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { useHistory } from "react-router-dom";
 import { actionGetUser } from "../../actions/loginAction";
 import ContentWrapper from "../../components/componentWrapper/ContentWrapper";
@@ -13,7 +13,7 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const history = useHistory();
   var cookies = new Cookies();
-  const userLogined = useSelector((state: any) => state.user.userInfor?.data?.data?.user);
+  // const userLogined = useSelector((state: any) => state.user.userInfor?.data?.data?.user);
   useEffect(() => {
     async function checkAuthenticaton() {
       const token = await cookies.get(STORAGE_TOKEN) ||  await LocalStorage.get(STORAGE_TOKEN)
@@ -25,6 +25,7 @@ export default function Dashboard() {
       }
     }
     checkAuthenticaton();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <DashBoard>

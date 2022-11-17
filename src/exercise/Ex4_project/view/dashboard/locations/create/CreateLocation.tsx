@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import Input from "../../../../components/form/Input";
 import Select from "../../../../components/form/Select";
@@ -88,6 +87,7 @@ export default function CreateLocation() {
       history.push("/dashboard/locations");
       return;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   useEffect(() => {

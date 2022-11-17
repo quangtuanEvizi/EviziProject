@@ -6,7 +6,6 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
 } from 'react-router-dom'
 import Dashboard from './exercise/Ex4_project/view/dashboard/Dashboard';
 import Login from './exercise/Ex4_project/view/login/Login';

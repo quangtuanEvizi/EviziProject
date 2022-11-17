@@ -42,6 +42,7 @@ export default function CreateCompany() {
       history.push("/dashboard/companies");
       return;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createSuccess]);
 
   useEffect(() => {

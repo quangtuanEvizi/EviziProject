@@ -45,6 +45,7 @@ export default function Regions() {
 
   useEffect(() => {
     getRegion({ first: 20, after: null });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleFetchNext = () => {

@@ -25,8 +25,8 @@ import Loadding from "exercise/Ex4_project/components/loadding/Loadding";
 
 export default function Inspection1() {
   const dispatch = useDispatch();
-  const { getCompany, loadmoreCompany } = useCompany();
-  const { getRegion, loadmoreRegion } = useRegion();
+  const { getCompany } = useCompany();
+  const { getRegion } = useRegion();
   const variablesSearch = { first: 20, after: null };
 
   const [localInspectionState, setLocalInspectionState] = useState([]);
@@ -50,16 +50,10 @@ export default function Inspection1() {
   const companies = useSelector(
     (state: any) => state.companyReducer.companies?.edges
   );
-  const pageInfoCompany = useSelector(
-    (state: any) => state.companyReducer.companies?.pageInfo
-  );
+
 
   const regions = useSelector(
     (state: any) => state.regionReducer.regions?.edges
-  );
-
-  const pageInfoRegion = useSelector(
-    (state: any) => state.regionReducer.regions?.pageInfo
   );
 
   useEffect(() => {
@@ -76,6 +70,7 @@ export default function Inspection1() {
 
   useEffect(() => {
     dispatch(actionGetInspection({ first: 20, after: null }));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

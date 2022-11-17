@@ -106,28 +106,28 @@ const DropdownItem = styled.div`
     background-color: #9fc3f870;
   }
 `;
-const SearchBox = styled.div`
-  padding: 5px;
-  background-color: #eee;
-  display: flex;
-  button {
-    background-color: RGB(193, 195, 197);
-    color: rgb(223, 223, 223);
-    font-size: 15px;
-    margin: 0 5px;
-    padding: 5px;
-    border: none;
-    border-radius: 5px;
-    &:hover {
-      background-color: RGB(182, 183, 184);
-      color: #fff;
-    }
-  }
-`;
-const SearchBoxInput = styled.input`
-  width: 100%;
-  box-sizing: border-box;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
+// const SearchBox = styled.div`
+//   padding: 5px;
+//   background-color: #eee;
+//   display: flex;
+//   button {
+//     background-color: RGB(193, 195, 197);
+//     color: rgb(223, 223, 223);
+//     font-size: 15px;
+//     margin: 0 5px;
+//     padding: 5px;
+//     border: none;
+//     border-radius: 5px;
+//     &:hover {
+//       background-color: RGB(182, 183, 184);
+//       color: #fff;
+//     }
+//   }
+// `;
+// const SearchBoxInput = styled.input`
+//   width: 100%;
+//   box-sizing: border-box;
+//   padding: 5px;
+//   border: 1px solid #ccc;
+//   border-radius: 5px;
+// `;

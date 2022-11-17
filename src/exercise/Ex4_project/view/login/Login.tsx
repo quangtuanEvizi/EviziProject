@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -59,6 +60,7 @@ export default function Login() {
       }
       history.push("/dashboard");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
@@ -73,12 +75,14 @@ export default function Login() {
       }
     }
     checkLogin();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (userLogined) {
       history.push("/dashboard");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userLogined]);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {

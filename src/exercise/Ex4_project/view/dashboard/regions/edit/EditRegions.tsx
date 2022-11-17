@@ -44,6 +44,7 @@ export default function EditRegions() {
 
   useEffect(() => {
     getRegionById(parseInt(regionId));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -51,6 +52,7 @@ export default function EditRegions() {
       history.push("/dashboard/regions");
       return;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   useEffect(() => {
@@ -101,6 +103,7 @@ const FormEdit = (props: any) => {
       shouldDirty: true,
     });
     setCompanyNameDisplay(regionDetail?.company?.name);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [regionDetail]);
 
   /*---------------------
