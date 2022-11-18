@@ -19,10 +19,10 @@ function App() {
           <GlobalStyles />
           <Router>
             <Switch>
-              <Route path="/" component={Login}/>
+              {/* <Route path="/" component={Login}/> */}
               <Route path="/dashboard" component={Dashboard} />
               <Route exact path="/login" component={Login} />
-              {/* <Redirect from="*" to="/dashboard" /> */}
+              <Redirect from="*" to="/dashboard" />
             </Switch>
           </Router>
         </div>
