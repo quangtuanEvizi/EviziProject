@@ -3,6 +3,7 @@ import "./Sidebar.scss";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import ContentWrapper from "../componentWrapper/ContentWrapper";
 import {
+  GRAPHQL_ENDPOINT,
   HIGHEST_ROLE,
   MANAGER_ROLE,
   STORAGE_TOKEN,
@@ -66,7 +67,7 @@ const Sidebar: React.FC<any> = ({ component }) => {
       <div className="sidebar">
         <div className="logo">
           <img
-            src="http://192.168.1.189:13030/7a118e128cc5c737471c73f087afdbc9.png"
+            src={`${GRAPHQL_ENDPOINT}/7a118e128cc5c737471c73f087afdbc9.png`}
             alt=""
           />
         </div>
