@@ -75,36 +75,53 @@ export const TableContainer = styled.div`
   width: 80vw;
   margin: 0 auto;
   margin-top: 80px;
-  padding: 20px;
-`;
-export const TableName = styled.table`
-  width: 30%;
-  box-shadow: -1px 1px 2px 6px rgba(0, 0, 0, 0.2);
-  margin: 0;
-`;
-export const DivTableList = styled.div`
-  width: 70%;
-  overflow-x: auto;
-`;
-export const TableList = styled.table`
-  display: block;
-  overflow-x: auto;
+  position: relative;
   white-space: nowrap;
 `;
-export const TableHead = styled.thead``;
-// export const TableBody = styled.tbody`
-//   display: table;
-//   width: 100%;
-// `;
-export const TableHeader = styled.th`
-  height: 30px;
+export const DivTableName = styled.div`
+  width: 25%;
+`;
+export const DivTableData = styled.div`
+  width: 75%;
+  overflow: auto;
+`;
+export const TableName = styled.table`
+  width: 100%;
+`;
+export const Table = styled.table`
+  width: 100%;
+`;
+export const TableHeader = styled.thead`
   font-size: 20px;
+  font-weight: 600;
+  text-align: left;
+  height: 80px;
+`;
+export const TableBody = styled.tbody``;
+
+export const TableData = styled.td`
+  border-bottom: 1px solid black;
+  padding: 15px;
+  width: 100%;
 `;
 export const TableRow = styled.tr`
-  width: 100px;
-  text-align: center;
-  height: 40px;
-  font-size: 17px;
-  width: 85%;
+  width: 100%;
+  height: 60px !important;
+  margin: 0;
+  &:hover {
+    background-color: rgb(232, 241, 252);
+  }
 `;
-export const TableData = styled.td``;
+
+export const ButtonSortContainer = styled.div`
+  display: inline-flex;
+  flex-direction: column;
+  height: auto;
+  margin-left: 5px;
+`;
+export const ButtonSort = styled.button`
+  padding: 0;
+  background-color: #fff;
+  color: #000;
+  border: none;
+`;

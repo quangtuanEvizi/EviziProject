@@ -8,16 +8,20 @@ export const getCompanies = (variables) => {
     $active: Boolean,
     $demo: Boolean,
     $orderBy: CompanyOrder,
+    $planLevel: [CompanyPlanLevel!],
+    $industry:String,
     $first: Int,
     $last: Int,
     $after: String,
-    $before: String
+    $before: String,
   ) {
     companies(
       name: $name,
       active: $active,
       demo: $demo,
       orderBy: $orderBy,
+      planLevel: $planLevel,
+      industry:$industry,
       first: $first,
       last: $last,
       after: $after,
@@ -32,6 +36,26 @@ export const getCompanies = (variables) => {
           planLevel,
           productPlan,
           demo,
+          maxUsers,
+          maxLocations,
+          createdAt,
+          updatedAt,
+          lastInspectionAt,
+          users {
+            edges {
+              node {
+                id
+              }
+            }
+          },
+          inspections {
+            edges {
+              node {
+                id
+              }
+            }
+          },
+          
           regions {
             edges {
               node {
