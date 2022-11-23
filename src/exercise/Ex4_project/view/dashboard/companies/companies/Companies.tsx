@@ -8,6 +8,8 @@ import { ImSearch } from "react-icons/im";
 import { omit } from "lodash";
 import useCompany from "../../../../customHook/company/companyHook";
 import Moment from "react-moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
 import {
   ButtonPagination,
   ButtonSort,
@@ -363,201 +365,207 @@ EVENT HANDLE
         {/* {isLoadding ? (
           <Loadding />
         ) : ( */}
-          <>
-            {companyLocalState?.length > 0 ? (
-              <>
-                <TableContainer>
-                  <DivTableName>
-                    <TableName>
-                      <TableHeader>
-                        <TableRow>
-                          <TableData>
-                            NAME
-                            <ButtonSortContainer>
+        <>
+          {companyLocalState?.length > 0 ? (
+            <>
+              <TableContainer>
+                <DivTableName>
+                  <TableName>
+                    <TableHeader>
+                      <TableRow>
+                        <TableData>
+                          NAME
+                          <ButtonSortContainer>
+                            {isSortNameDown ? (
                               <ButtonSort onClick={handleSortName}>
-                                <FaSort />
+                                <FontAwesomeIcon icon={faSortDown} />
                               </ButtonSort>
-                            </ButtonSortContainer>
-                          </TableData>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {companyLocalState?.map((row: any, i: number) => (
-                          <TableRow key={i}>
-                            <TableData>
-                              <Link
-                                to={`/dashboard/companies/${row?.node?.id}`}
-                              >
-                                {row?.node?.name}
-                              </Link>
-                            </TableData>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </TableName>
-                  </DivTableName>
-
-                  <DivTableData>
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableData>
-                            INDUSTRY{" "}
-                            <ButtonFilter
-                              options={INDUSTRY_FILTERS}
-                              multiSelect={false}
-                              selectValueOption={selectOption}
-                              selectOption={[]}
-                              handleRemoveFilter={handleRemoveFilter}
-                            />
-                          </TableData>
-                          <TableData>REGION</TableData>
-                          <TableData>
-                            PLAN LEVEL{" "}
-                            <ButtonFilter
-                              options={PLAN_LEVEL_FILTERS}
-                              multiSelect={true}
-                              selectOption={variables?.planLevel}
-                              selectValueOption={selectOption}
-                              handleRemoveFilter={handleRemoveFilter}
-                            />
-                          </TableData>
-                          <TableData>LOCATION</TableData>
-                          <TableData>USERS</TableData>
-                          <TableData>INSPECTIONS</TableData>
-                          <TableData>
-                            IS DEMO
-                            <ButtonFilter
-                              options={ISDEMO_FILTER}
-                              multiSelect={true}
-                              selectValueOption={selectOption}
-                              selectOption={selectDemo}
-                              handleRemoveFilter={handleRemoveFilter}
-                            />
-                          </TableData>
-                          <TableData>
-                            IS ACTIVE
-                            <ButtonFilter
-                              options={ISACTIVE_FILTER}
-                              multiSelect={true}
-                              selectValueOption={selectOption}
-                              selectOption={selectActive}
-                              handleRemoveFilter={handleRemoveFilter}
-                            />
-                          </TableData>
-                          <TableData>MAX LOCATIONS</TableData>
-                          <TableData>MAX USERS</TableData>
-                          <TableData>
-                            CREATED AT
-                            <ButtonSort onClick={handleSortCreateAt}>
-                              <FaSort />
-                            </ButtonSort>
-                          </TableData>
-                          <TableData>UPDATED AT</TableData>
-                          <TableData>LAST INSPECTION</TableData>
-                          <TableData>COMPANY ID</TableData>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {companyLocalState?.map((row: any, i: number) => (
-                          <TableRow key={i}>
-                            <TableData>{row?.node?.industry}</TableData>
-                            <TableData>
-                              {row?.node?.regions?.edges?.length}
-                            </TableData>
-                            <TableData>{row?.node?.planLevel}</TableData>
-                            <TableData>
-                              {row?.node?.locations?.edges?.length}
-                            </TableData>
-                            <TableData>
-                              {row?.node?.users?.edges?.length}
-                            </TableData>
-                            <TableData>
-                              {row?.node?.inspections?.edges?.length}
-                            </TableData>
-
-                            <TableData>
-                              {row?.node?.demo ? (
-                                <IconContext.Provider
-                                  value={{ color: "green" }}
-                                >
-                                  <div>
-                                    <AiFillCheckCircle />
-                                  </div>
-                                </IconContext.Provider>
-                              ) : (
-                                <IconContext.Provider value={{ color: "red" }}>
-                                  <div>
-                                    <AiFillCloseCircle />
-                                  </div>
-                                </IconContext.Provider>
-                              )}
-                            </TableData>
-                            <TableData>
-                              {row?.node?.active ? (
-                                <IconContext.Provider
-                                  value={{ color: "green" }}
-                                >
-                                  <div>
-                                    <AiFillCheckCircle />
-                                  </div>
-                                </IconContext.Provider>
-                              ) : (
-                                <IconContext.Provider value={{ color: "red" }}>
-                                  <div>
-                                    <AiFillCloseCircle />
-                                  </div>
-                                </IconContext.Provider>
-                              )}
-                            </TableData>
-                            <TableData>{row?.node?.maxLocations}</TableData>
-                            <TableData>{row?.node?.maxUsers}</TableData>
-                            <TableData>
-                              <Moment format="MMM DD, YYYY">
-                                {row?.node?.createdAt}
-                              </Moment>
-                            </TableData>
-                            <TableData>
-                              <Moment format="MMM DD, YYYY">
-                                {row?.node?.updatedAt}
-                              </Moment>
-                            </TableData>
-                            {row?.node?.lastInspectionAt ? (
-                              <TableData>
-                                <Moment format="MMM DD, YYYY">
-                                  {row?.node?.lastInspectionAt}
-                                </Moment>
-                              </TableData>
                             ) : (
-                              <TableData></TableData>
+                              <ButtonSort onClick={handleSortName}>
+                                <FontAwesomeIcon icon={faSortUp} />
+                              </ButtonSort>
                             )}
+                          </ButtonSortContainer>
+                        </TableData>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {companyLocalState?.map((row: any, i: number) => (
+                        <TableRow key={i}>
+                          <TableData>
+                            <Link to={`/dashboard/companies/${row?.node?.id}`}>
+                              {row?.node?.name}
+                            </Link>
+                          </TableData>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </TableName>
+                </DivTableName>
 
-                            <TableData>{row?.node?.id}</TableData>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </DivTableData>
-                </TableContainer>
-                <ListPagination>
-                  <ButtonPagination
-                    onClick={() => handleFetchPrev()}
-                    disabled={!pageInfo?.hasPreviousPage}
-                  >
-                    <GrFormPrevious />
-                  </ButtonPagination>
-                  <ButtonPagination
-                    onClick={() => handleFetchNext()}
-                    disabled={!pageInfo?.hasNextPage}
-                  >
-                    <GrFormNext />
-                  </ButtonPagination>
-                </ListPagination>
-              </>
-            ) : (
-              <EmptyPage />
-            )}
-          </>
+                <DivTableData>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableData>
+                          INDUSTRY{" "}
+                          <ButtonFilter
+                            options={INDUSTRY_FILTERS}
+                            multiSelect={false}
+                            selectValueOption={selectOption}
+                            selectOption={[]}
+                            handleRemoveFilter={handleRemoveFilter}
+                          />
+                        </TableData>
+                        <TableData>REGION</TableData>
+                        <TableData>
+                          PLAN LEVEL{" "}
+                          <ButtonFilter
+                            options={PLAN_LEVEL_FILTERS}
+                            multiSelect={true}
+                            selectOption={variables?.planLevel}
+                            selectValueOption={selectOption}
+                            handleRemoveFilter={handleRemoveFilter}
+                          />
+                        </TableData>
+                        <TableData>LOCATION</TableData>
+                        <TableData>USERS</TableData>
+                        <TableData>INSPECTIONS</TableData>
+                        <TableData>
+                          IS DEMO
+                          <ButtonFilter
+                            options={ISDEMO_FILTER}
+                            multiSelect={true}
+                            selectValueOption={selectOption}
+                            selectOption={selectDemo}
+                            handleRemoveFilter={handleRemoveFilter}
+                          />
+                        </TableData>
+                        <TableData>
+                          IS ACTIVE
+                          <ButtonFilter
+                            options={ISACTIVE_FILTER}
+                            multiSelect={true}
+                            selectValueOption={selectOption}
+                            selectOption={selectActive}
+                            handleRemoveFilter={handleRemoveFilter}
+                          />
+                        </TableData>
+                        <TableData>MAX LOCATIONS</TableData>
+                        <TableData>MAX USERS</TableData>
+                        <TableData>
+                          CREATED AT
+                          {isSortCreateAtDown ? (
+                              <ButtonSort onClick={handleSortCreateAt}>
+                                <FontAwesomeIcon icon={faSortDown} />
+                              </ButtonSort>
+                            ) : (
+                              <ButtonSort onClick={handleSortCreateAt}>
+                                <FontAwesomeIcon icon={faSortUp} />
+                              </ButtonSort>
+                            )}
+                        </TableData>
+                        <TableData>UPDATED AT</TableData>
+                        <TableData>LAST INSPECTION</TableData>
+                        <TableData>COMPANY ID</TableData>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {companyLocalState?.map((row: any, i: number) => (
+                        <TableRow key={i}>
+                          <TableData>{row?.node?.industry}</TableData>
+                          <TableData>
+                            {row?.node?.regions?.edges?.length}
+                          </TableData>
+                          <TableData>{row?.node?.planLevel}</TableData>
+                          <TableData>
+                            {row?.node?.locations?.edges?.length}
+                          </TableData>
+                          <TableData>
+                            {row?.node?.users?.edges?.length}
+                          </TableData>
+                          <TableData>
+                            {row?.node?.inspections?.edges?.length}
+                          </TableData>
+
+                          <TableData>
+                            {row?.node?.demo ? (
+                              <IconContext.Provider value={{ color: "green" }}>
+                                <div>
+                                  <AiFillCheckCircle />
+                                </div>
+                              </IconContext.Provider>
+                            ) : (
+                              <IconContext.Provider value={{ color: "red" }}>
+                                <div>
+                                  <AiFillCloseCircle />
+                                </div>
+                              </IconContext.Provider>
+                            )}
+                          </TableData>
+                          <TableData>
+                            {row?.node?.active ? (
+                              <IconContext.Provider value={{ color: "green" }}>
+                                <div>
+                                  <AiFillCheckCircle />
+                                </div>
+                              </IconContext.Provider>
+                            ) : (
+                              <IconContext.Provider value={{ color: "red" }}>
+                                <div>
+                                  <AiFillCloseCircle />
+                                </div>
+                              </IconContext.Provider>
+                            )}
+                          </TableData>
+                          <TableData>{row?.node?.maxLocations}</TableData>
+                          <TableData>{row?.node?.maxUsers}</TableData>
+                          <TableData>
+                            <Moment format="MMM DD, YYYY">
+                              {row?.node?.createdAt}
+                            </Moment>
+                          </TableData>
+                          <TableData>
+                            <Moment format="MMM DD, YYYY">
+                              {row?.node?.updatedAt}
+                            </Moment>
+                          </TableData>
+                          {row?.node?.lastInspectionAt ? (
+                            <TableData>
+                              <Moment format="MMM DD, YYYY">
+                                {row?.node?.lastInspectionAt}
+                              </Moment>
+                            </TableData>
+                          ) : (
+                            <TableData></TableData>
+                          )}
+
+                          <TableData>{row?.node?.id}</TableData>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </DivTableData>
+              </TableContainer>
+              <ListPagination>
+                <ButtonPagination
+                  onClick={() => handleFetchPrev()}
+                  disabled={!pageInfo?.hasPreviousPage || isLoadding}
+                >
+                  <GrFormPrevious />
+                </ButtonPagination>
+                <ButtonPagination
+                  onClick={() => handleFetchNext()}
+                  disabled={!pageInfo?.hasNextPage || isLoadding}
+                >
+                  <GrFormNext />
+                </ButtonPagination>
+              </ListPagination>
+            </>
+          ) : (
+            <EmptyPage />
+          )}
+        </>
         {/* )} */}
       </ListContainer>
     </>

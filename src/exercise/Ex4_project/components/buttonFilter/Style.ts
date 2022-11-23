@@ -41,7 +41,7 @@ export const DropdownMenu = styled.div`
   border: 1px solid #ccc;
   border-radius: 5px;
   overflow: auto;
-  max-height: 150px;
+  max-height: 250px;
   background-color: #fff;
   z-index: 100;
   padding: 20px;
