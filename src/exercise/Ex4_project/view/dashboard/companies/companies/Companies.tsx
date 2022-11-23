@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
@@ -32,7 +32,7 @@ import {
 import { IconContext } from "react-icons";
 import { AiFillCloseCircle, AiFillCheckCircle } from "react-icons/ai";
 import EmptyPage from "exercise/Ex4_project/components/emptyPage";
-import Loadding from "exercise/Ex4_project/components/loadding/Loadding";
+// import Loadding from "exercise/Ex4_project/components/loadding/Loadding";
 import ButtonFilter from "exercise/Ex4_project/components/buttonFilter/ButtonFilter";
 import {
   INDUSTRY_FILTERS,
@@ -42,6 +42,12 @@ import {
 } from "exercise/Ex4_project/utils/filterConstant";
 import { QueryCompany } from "exercise/Ex4_project/interface/QueryInterface";
 import styled from "styled-components";
+import { ButtonDeleteDependency, Dependency, ListDependencies } from "./Style";
+export type ItemFilter = {
+  type: string;
+  value: string | boolean;
+  label: string;
+};
 export default function Companies() {
   const { getCompany } = useCompany();
   const [companyLocalState, setCompanyLocalState] = useState([]);
@@ -49,6 +55,7 @@ export default function Companies() {
   const [prevCompanyName, setPrevCompanyName] = useState("");
   const [isSortNameDown, setIsSortNameDown] = useState(true);
   const [isSortCreateAtDown, setIsSortCreateAtDown] = useState(true);
+  const [itemFilter, setItemFilter] = useState([] as ItemFilter[]);
   const [variables, setVariables] = useState({
     first: 20,
     after: null,
@@ -77,9 +84,22 @@ export default function Companies() {
     getCompany(variables);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variables]);
+
   /*-----------------------------------
 EVENT HANDLE
 ------------------------------------*/
+
+  const selectDemo = useMemo(() => {
+    return itemFilter
+      ?.filter((item) => item.type === "demo")
+      .map((item) => item.value);
+  }, [itemFilter]);
+
+  const selectActive = useMemo(() => {
+    return itemFilter
+      ?.filter((item) => item.type === "active")
+      .map((item) => item.value);
+  }, [itemFilter]);
 
   const handleChangeCompanyName = (e: any) => {
     setCompanyName(e.target.value);
@@ -123,42 +143,100 @@ EVENT HANDLE
           if (resetVariables?.industry?.includes(option?.value)) break;
           const filter = { ...resetVariables, industry: option?.value };
           setVariables(filter);
+          if (resetVariables.hasOwnProperty("industry")) {
+            const newItems = itemFilter.filter(
+              (item) => item.type !== "industry"
+            );
+            setItemFilter([
+              ...newItems,
+              { type: "industry", value: option?.value, label: option?.label },
+            ]);
+          } else {
+            setItemFilter([
+              ...itemFilter,
+              { type: "industry", value: option?.value, label: option?.label },
+            ]);
+          }
           break;
         case "planLevel":
-          if (resetVariables?.planLevel?.includes(option?.value)) break;
-          if (!resetVariables.hasOwnProperty("planLevel")) {
-            const filter = { ...resetVariables, planLevel: [option?.value] };
-            setVariables(filter);
+          if (resetVariables.hasOwnProperty("planLevel")) {
+            if (!resetVariables.planLevel?.includes(option?.value)) {
+              setVariables({
+                ...resetVariables,
+                planLevel: [...resetVariables?.planLevel, option?.value],
+              });
+              setItemFilter([
+                ...itemFilter,
+                {
+                  type: "planLevel",
+                  value: option?.value,
+                  label: option?.label,
+                },
+              ]);
+              break;
+            }
           } else {
-            const filter = {
-              ...resetVariables,
-              planLevel: [...resetVariables?.planLevel, option?.value],
-            };
-            setVariables(filter);
+            setVariables({ ...resetVariables, planLevel: [option?.value] });
+            setItemFilter([
+              ...itemFilter,
+              { type: "planLevel", value: option?.value, label: option?.label },
+            ]);
           }
           break;
         case "demo":
-          if (!resetVariables.hasOwnProperty("demo")) {
-            const filter = { ...resetVariables, demo: [option?.value] };
-            setVariables(filter);
-          } else {
-            const filter = {
-              ...resetVariables,
-              demo: [...resetVariables?.demo, option?.value],
-            };
-            setVariables(filter);
+          const filterDemo = itemFilter.filter((item) => item?.type === "demo");
+          if (filterDemo?.length === 0) {
+            setVariables({ ...resetVariables, demo: option.value });
+            setItemFilter([
+              ...itemFilter,
+              {
+                type: "demo",
+                value: option?.value,
+                label: `${option?.value ? "Demo" : "Not Demo"}`,
+              },
+            ]);
+          }
+          if (filterDemo?.length === 1) {
+            setVariables(omit(resetVariables, ["demo"]));
+            if (filterDemo[0].value !== option.value) {
+              setItemFilter([
+                ...itemFilter,
+                {
+                  type: "demo",
+                  value: option?.value,
+                  label: `${option?.value ? "Demo" : "Not Demo"}`,
+                },
+              ]);
+            }
           }
           break;
         case "active":
-          if (!resetVariables.hasOwnProperty("active")) {
-            const filter = { ...resetVariables, active: [option?.value] };
-            setVariables(filter);
-          } else {
-            const filter = {
-              ...resetVariables,
-              active: [...resetVariables?.active, option?.value],
-            };
-            setVariables(filter);
+          const filterActive = itemFilter.filter(
+            (item) => item?.type === "active"
+          );
+          if (filterActive?.length === 0) {
+            setVariables({ ...resetVariables, active: option.value });
+            setItemFilter([
+              ...itemFilter,
+              {
+                type: "active",
+                value: option?.value,
+                label: `${option?.value ? "Active" : "Inactive"}`,
+              },
+            ]);
+          }
+          if (filterActive?.length === 1) {
+            setVariables(omit(resetVariables, ["active"]));
+            if (filterActive[0].value !== option.value) {
+              setItemFilter([
+                ...itemFilter,
+                {
+                  type: "active",
+                  value: option?.value,
+                  label: `${option?.value ? "Active" : "Inactive"}`,
+                },
+              ]);
+            }
           }
           break;
       }
@@ -171,38 +249,34 @@ EVENT HANDLE
   const handleSortName = () => {
     setIsSortNameDown(!isSortNameDown);
     if (isSortNameDown) {
-      let variables = {
-        first: 20,
-        after: null,
+      const filter = {
+        ...variables,
         orderBy: { direction: "DESC", field: "NAME" },
       };
-      getCompany(variables);
+      setVariables(filter);
     } else {
-      let variables = {
-        first: 20,
-        after: null,
+      const filter = {
+        ...variables,
         orderBy: { direction: "ASC", field: "NAME" },
       };
-      getCompany(variables);
+      setVariables(filter);
     }
   };
 
   const handleSortCreateAt = () => {
     setIsSortCreateAtDown(!isSortCreateAtDown);
     if (isSortCreateAtDown) {
-      let variables = {
-        first: 20,
-        after: null,
+      const filter = {
+        ...variables,
         orderBy: { direction: "DESC", field: "CREATED_AT" },
       };
-      getCompany(variables);
+      setVariables(filter);
     } else {
-      let variables = {
-        first: 20,
-        after: null,
+      const filter = {
+        ...variables,
         orderBy: { direction: "ASC", field: "CREATED_AT" },
       };
-      getCompany(variables);
+      setVariables(filter);
     }
   };
 
@@ -214,7 +288,38 @@ EVENT HANDLE
       case "industry":
         setVariables(omit(variables, ["industry"]));
         break;
+      case "planLevel":
+        const listPlan = variables?.planLevel?.filter(
+          (item: any) => item !== value
+        );
+        if (listPlan.length) {
+          setVariables({ ...variables, planLevel: listPlan });
+        } else {
+          setVariables(omit(variables, ["planLevel"]));
+        }
+        break;
+      case "demo":
+        const filterDemo = itemFilter.filter((item) => item?.type === "demo");
+        if (filterDemo?.length === 2) {
+          setVariables({ ...variables, demo: !value });
+        } else if (filterDemo?.length === 1) {
+          setVariables(omit(variables, ["demo"]));
+        }
+        break;
+      case "active":
+        const filterActive = itemFilter.filter(
+          (item) => item?.type === "active"
+        );
+        if (filterActive?.length === 2) {
+          setVariables({ ...variables, active: !value });
+        } else if (filterActive?.length === 1) {
+          setVariables(omit(variables, ["active"]));
+        }
     }
+    const newFilter = itemFilter.filter(
+      (item) => item.value !== value || item.type !== type
+    );
+    setItemFilter(newFilter);
   };
   return (
     <>
@@ -229,25 +334,16 @@ EVENT HANDLE
             </Link>
           </HeaderLink>
           <ListDependencies>
-            {variables?.name && (
-              <Dependency
-                onClick={() => handleRemoveFilter("company", variables.name)}
-              >
-                {variables.name}
-              </Dependency>
-            )}
-            {variables?.industry && (
-              <Dependency
-                onClick={() =>
-                  handleRemoveFilter("industry", variables.industry)
-                }
-              >
-                {variables.industry}
-              </Dependency>
-            )}
-            {variables?.planLevel &&
-              variables?.planLevel.map((plan: string, index: number) => (
-                <Dependency key={index}>{plan}</Dependency>
+            {itemFilter &&
+              itemFilter?.map((item: any, index: number) => (
+                <Dependency key={index}>
+                  {item.label}
+                  <ButtonDeleteDependency
+                    onClick={() => handleRemoveFilter(item.type, item.value)}
+                  >
+                    x
+                  </ButtonDeleteDependency>
+                </Dependency>
               ))}
           </ListDependencies>
           <HeaderSearch>
@@ -264,9 +360,9 @@ EVENT HANDLE
             </InputSearchContainer>
           </HeaderSearch>
         </HeaderList>
-        {isLoadding ? (
+        {/* {isLoadding ? (
           <Loadding />
-        ) : (
+        ) : ( */}
           <>
             {companyLocalState?.length > 0 ? (
               <>
@@ -311,6 +407,8 @@ EVENT HANDLE
                               options={INDUSTRY_FILTERS}
                               multiSelect={false}
                               selectValueOption={selectOption}
+                              selectOption={[]}
+                              handleRemoveFilter={handleRemoveFilter}
                             />
                           </TableData>
                           <TableData>REGION</TableData>
@@ -318,8 +416,10 @@ EVENT HANDLE
                             PLAN LEVEL{" "}
                             <ButtonFilter
                               options={PLAN_LEVEL_FILTERS}
-                              multiSelect={false}
+                              multiSelect={true}
+                              selectOption={variables?.planLevel}
                               selectValueOption={selectOption}
+                              handleRemoveFilter={handleRemoveFilter}
                             />
                           </TableData>
                           <TableData>LOCATION</TableData>
@@ -331,6 +431,8 @@ EVENT HANDLE
                               options={ISDEMO_FILTER}
                               multiSelect={true}
                               selectValueOption={selectOption}
+                              selectOption={selectDemo}
+                              handleRemoveFilter={handleRemoveFilter}
                             />
                           </TableData>
                           <TableData>
@@ -339,6 +441,8 @@ EVENT HANDLE
                               options={ISACTIVE_FILTER}
                               multiSelect={true}
                               selectValueOption={selectOption}
+                              selectOption={selectActive}
+                              handleRemoveFilter={handleRemoveFilter}
                             />
                           </TableData>
                           <TableData>MAX LOCATIONS</TableData>
@@ -454,22 +558,8 @@ EVENT HANDLE
               <EmptyPage />
             )}
           </>
-        )}
+        {/* )} */}
       </ListContainer>
     </>
   );
 }
-const ListDependencies = styled.div`
-  width: 100%;
-  display: "flex";
-  flex-direction: "row";
-  flex-wrap: wrap;
-`;
-const Dependency = styled.span`
-  background-color: #7777c8;
-  margin: 5px;
-  padding: 10px 20px;
-  border-radius: 20px;
-  font-weight: 700;
-  color: white;
-`;

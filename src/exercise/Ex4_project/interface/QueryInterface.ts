@@ -4,8 +4,8 @@ export type CompanyPlanLevel =
   | "professional"
   | "enterprise";
 export type CompanyOrder = {
-  direction: "ASC" | "DESC";
-  field: "NAME" | "CREATED_AT";
+  direction: string
+  field: string
 };
 export interface QueryCompany {
   first?: number;
@@ -14,8 +14,8 @@ export interface QueryCompany {
   before?: string | null;
   name?: string;
   industry?: string;
-  active?: boolean[] | any;
-  demo?: boolean[] | any;
+  active?: boolean;
+  demo?: boolean;
   planLevel?: CompanyPlanLevel[] | any;
   productPlan?: string[];
   orderBy?: CompanyOrder;

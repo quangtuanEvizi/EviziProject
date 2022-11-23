@@ -1,16 +1,28 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import useOnclickOutside from "react-cool-onclickoutside";
-
+import {
+  ButtonContainer,
+  Checkbox,
+  DropdownButton,
+  DropdownContainer,
+  DropdownItem,
+  DropdownItemContainer,
+  DropdownMenu,
+} from "./Style";
 interface props {
   options: Array<any>;
   selectValueOption: any;
   multiSelect: boolean;
+  selectOption: any[];
+  handleRemoveFilter:any;
+  
 }
 const ButtonFilter: React.FC<props> = ({
   options,
   selectValueOption,
   multiSelect,
+  selectOption,
+  handleRemoveFilter
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const handleClickButton = () => {
@@ -19,6 +31,13 @@ const ButtonFilter: React.FC<props> = ({
 
   const onItemClick = (option: any) => {
     selectValueOption(option);
+  };
+  const handleChange = (e: any, option: any) => {
+    if (e.target.checked) {
+      selectValueOption(option);
+    }else{
+      handleRemoveFilter(option.type, option.value)
+    }
   };
   const closeMenu = (): void => setShowMenu(false);
   const ref = useOnclickOutside(() => closeMenu());
@@ -38,7 +57,13 @@ const ButtonFilter: React.FC<props> = ({
                 if (option.type) {
                   return (
                     <DropdownItemContainer key={i}>
-                      {multiSelect && <Checkbox type="checkbox" />}
+                      {multiSelect && (
+                        <Checkbox
+                          type="checkbox"
+                          checked={selectOption?.includes(option?.value) || false}
+                          onChange={(e) => handleChange(e, option)}
+                        />
+                      )}
                       <DropdownItem onClick={() => onItemClick(option)}>
                         {option?.label}
                       </DropdownItem>
@@ -62,71 +87,4 @@ const ButtonFilter: React.FC<props> = ({
     </ButtonContainer>
   );
 };
-
 export default ButtonFilter;
-const ButtonContainer = styled.div`
-  display: inline-block;
-  margin-left: 30px;
-  label {
-    color: #aeb8cc;
-    font-size: 18px;
-    padding: 5px 10px;
-    float: left;
-    font-weight: 700;
-    &.invalid {
-      color: red;
-    }
-  }
-  span {
-    font-size: 12px;
-    color: red;
-    height: 24px;
-    margin-left: 10px;
-  }
-`;
-
-const DropdownButton = styled.div`
-  height: 30px;
-  width: 30px;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-`;
-const DropdownContainer = styled.div`
-  text-align: left;
-  border: 1px solid #ccc;
-  position: relative;
-  border-radius: 5px;
-`;
-
-const DropdownMenu = styled.div`
-  position: absolute;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  overflow: auto;
-  max-height: 150px;
-  background-color: #fff;
-  z-index: 100;
-  padding: 20px;
-`;
-const DropdownItem = styled.div`
-  font-size: 25px;
-  padding: 5px;
-  cursor: pointer;
-  &:hover {
-    background-color: #9fc3f870;
-  }
-`;
-const DropdownItemContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-const Checkbox = styled.input`
-  width: 25px;
-  height: 25px;
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  margin-right: 10px;
-  margin-top: 8px;
-`;
